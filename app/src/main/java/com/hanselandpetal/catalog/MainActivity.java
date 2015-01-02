@@ -1,14 +1,7 @@
 package com.hanselandpetal.catalog;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,9 +16,12 @@ import android.widget.Toast;
 import com.hanselandpetal.catalog.model.Flower;
 import com.hanselandpetal.catalog.parsers.FlowerJSONParser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends ListActivity {
 
-	private static final String PHOTOS_BASE_URL = 
+	public static final String PHOTOS_BASE_URL =
 		"http://services.hanselandpetal.com/photos/";
 
 	TextView output;
@@ -99,19 +95,7 @@ public class MainActivity extends ListActivity {
 			
 			String content = HttpManager.getData(params[0], "feeduser", "feedpassword");
 			flowerList = FlowerJSONParser.parseFeed(content);
-			
-			for (Flower flower : flowerList) {
-				try {
-					String imageUrl = PHOTOS_BASE_URL + flower.getPhoto();
-					InputStream in = (InputStream) new URL(imageUrl).getContent();
-					Bitmap bitmap = BitmapFactory.decodeStream(in);
-					flower.setBitmap(bitmap);
-					in.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
+
 			return flowerList;
 		}
 		
