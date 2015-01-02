@@ -38,10 +38,12 @@ public class FlowerAdapter extends ArrayAdapter<Flower> {
 
 		//Display flower name in the TextView widget
 		Flower flower = flowerList.get(position);
+        TextView tv = (TextView) view.findViewById(R.id.textView1);
+        tv.setText(flower.getName());
 
         if (flower.getBitmap()!=null){
-            TextView tv = (TextView) view.findViewById(R.id.textView1);
-            tv.setText(flower.getName());
+            ImageView image = (ImageView) view.findViewById(R.id.imageView1);
+            image.setImageBitmap(flower.getBitmap());
         } else {
             FlowerAndView container = new FlowerAndView();
             container.flower=flower;
